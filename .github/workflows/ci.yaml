@@ -3,14 +3,13 @@ name: CI
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -22,7 +21,7 @@ jobs:
       with:
         python-version: '3.9'
 
-    - name: Cache dependencies
+    - name: Cache pip
       uses: actions/cache@v2
       with:
         path: ~/.cache/pip
@@ -35,6 +34,15 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Debug: List files
+      run: ls -alh
+
+    - name: Debug: Print Python version
+      run: python --version
+
+    - name: Debug: Print installed packages
+      run: pip list
+
     - name: Run tests
       run: |
-        pytest -n auto
+        pytest --maxfail=1 --disable-warnings -q --durations=10
