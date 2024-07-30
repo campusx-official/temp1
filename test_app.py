@@ -1,12 +1,12 @@
-import unittest
+import pytest
 from app import app
 
-class BasicTestCase(unittest.TestCase):
-    def test_home(self):
-        tester = app.test_client(self)
-        response = tester.get('/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data, b'Hello, World!')
+@pytest.fixture
+def client():
+    with app.test_client() as client:
+        yield client
 
-if __name__ == '__main__':
-    unittest.main()
+def test_home(client):
+    response = client.get('/')
+    assert response.status_code == 200
+    assert response.data == b'Hello, World!'
