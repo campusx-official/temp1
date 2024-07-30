@@ -1,9 +1,10 @@
-from flask import Flask
+# add.py
 
-app = Flask(__name__)
+def add(a, b):
+    return a + b
 
-@app.route('/')
-def hello():
-    return "hello world"
-
-app.run()
+if __name__ == "__main__":
+    num1 = float(input("Enter first number: "))
+    num2 = float(input("Enter second number: "))
+    result = add(num1, num2)
+    print(f"The sum of {num1} and {num2} is {result}")

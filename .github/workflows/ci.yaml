@@ -1,15 +1,10 @@
 name: CI
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+on: [push, pull_request]
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
@@ -19,30 +14,13 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.9'
-
-    - name: Cache pip
-      uses: actions/cache@v2
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
+        python-version: 3.x
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
-
-    - name: Debug: List files
-      run: ls -alh
-
-    - name: Debug: Print Python version
-      run: python --version
-
-    - name: Debug: Print installed packages
-      run: pip list
+        pip install unittest
 
     - name: Run tests
       run: |
-        pytest --maxfail=1 --disable-warnings -q --durations=10
+        python -m unittest discover

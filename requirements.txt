@@ -1,4 +1,1 @@
-Flask==2.0.3
-Werkzeug==2.0.3
-pytest==7.0.1
-pytest-xdist==2.5.0
+unittest
