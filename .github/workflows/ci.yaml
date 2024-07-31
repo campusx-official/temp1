@@ -3,14 +3,14 @@ name: CI
 on: push
 
 jobs:
-  lint:
+  linting:
     runs-on: ubuntu-latest
 
     steps:
       - name: code checkout
         uses: actions/checkout@v3
 
-      - name: set up python
+      - name: setup python
         uses: actions/setup-python@v2
 
       - name: install flake8
@@ -19,4 +19,5 @@ jobs:
           pip install flake8
 
       - name: run flake8
-        run: flake8 app.py
+        run: |
+          flake8 app.py
